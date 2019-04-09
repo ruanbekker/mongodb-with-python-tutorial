@@ -207,3 +207,11 @@ Select fields to aggregate, eg. aggregate the costs for selected stores:
 >>> [a['account_id'] for a in response]
 [u'gm_49121229']
 ```
+
+### Drop Collections
+
+```
+>>> transactions.drop()
+>>> db.collection_names()
+[]
+```
