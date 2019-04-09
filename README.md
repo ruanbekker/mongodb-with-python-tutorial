@@ -187,3 +187,23 @@ Select fields to aggregate, eg. aggregate the costs for selected stores:
 >>> [a for a in transactions.aggregate(agr)]
 [{u'_id': 1, u'sum2stores': 739.03}]
 ```
+
+### Limit Data Output
+
+```
+>>> response = transactions.find()
+>>> [a['account_id'] for a in response]
+[u'sns_03821023', u'sns_09121024', u'bk_29151823', u'gm_49121229']
+
+>>> response = transactions.find().skip(1).limit(3)
+>>> [a['account_id'] for a in response]
+[u'sns_09121024', u'bk_29151823', u'gm_49121229']
+
+>>> response = transactions.find().skip(1).limit(2)
+>>> [a['account_id'] for a in response]
+[u'sns_09121024', u'bk_29151823']
+
+>>> response = transactions.find().skip(3).limit(1)
+>>> [a['account_id'] for a in response]
+[u'gm_49121229']
+```
