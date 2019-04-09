@@ -179,3 +179,11 @@ or:
 >>> val
 [{u'all': 829.02, u'_id': 1}]
 ```
+
+Select fields to aggregate, eg. aggregate the costs for selected stores:
+
+```
+>>> agr = [{ '$match': {'$or': [ { 'store_name': 'sportsmans' }, { 'store_name': 'game' }] }}, { '$group': {'_id': 1, 'sum2stores': { '$sum': '$total_costs' } }}]
+>>> [a for a in transactions.aggregate(agr)]
+[{u'_id': 1, u'sum2stores': 739.03}]
+```
