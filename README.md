@@ -46,3 +46,58 @@ Making a connection with authentication:
 >>> db.collection_names()
 [u'flask_reminders', u'test', u'usersessions', u'messages']
 ```
+
+### Write One Document 
+
+Create a database `store_db`, use the `transactions` collection and write a document to it.
+
+```
+>>> db = client.store_db
+>>> transactions = db.transactions
+>>> doc_data = {
+    'store_name': 'sportsmans', 
+    'branch_name': 'tygervalley', 
+    'account_id': 'sns_03821023', 
+    'total_costs': 109.20, 
+    'products_purchased': ['cricket bat', 'cricket ball', 'sports hat'], 
+    'purchase_method': 
+    'credit card'
+}
+>>> response = transactions.insert_one(doc_data)
+>>> response.inserted_id
+ObjectId('5cad16a5a5f3826f6f046d74')
+```
+
+We can verify that the collection is present:
+
+```
+>>> db.collection_names()
+[u'transactions']
+```
+
+### Write Many Documents
+
+We can batch up our writes:
+
+```
+>>> transaction_1 = {
+    'store_name': 'sportsmans', 'branch_name': 'tygervalley', 
+    'account_id': 'sns_09121024', 'total_costs': 129.84, 
+    'products_purchased': ['sportsdrink', 'sunglasses', 'sports illustrated'], 
+    'purchase_method': 'credit card'
+}
+>>> transaction_2 = {
+    'store_name': 'burger king', 'branch_name': 
+    'somerset west', 'account_id': 'bk_29151823', 
+    'total_costs': 89.99, 'products_purchased': ['cheese burger', 'pepsi'], 
+    'purchase_method': 'cash'
+}
+>>> transaction_3 = {
+    'store_name': 'game', 'branch_name': 'bellvile', 'account_id': 'gm_49121229', 
+    'total_costs': 499.99, 'products_purchased': ['ps4 remote'], 
+    'purchase_method': 'cash'
+}
+>>> response = transactions.insert_many([transaction_1, transaction_2, transaction_3])
+>>> response.inserted_ids
+[ObjectId('5cad18d4a5f3826f6f046d75'), ObjectId('5cad18d4a5f3826f6f046d76'), ObjectId('5cad18d4a5f3826f6f046d77')]
+```
