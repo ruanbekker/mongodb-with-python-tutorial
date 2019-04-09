@@ -101,3 +101,26 @@ We can batch up our writes:
 >>> response.inserted_ids
 [ObjectId('5cad18d4a5f3826f6f046d75'), ObjectId('5cad18d4a5f3826f6f046d76'), ObjectId('5cad18d4a5f3826f6f046d77')]
 ```
+
+### Find One Document:
+
+```
+>>> transactions.find_one({'account_id': 'gm_49121229'})
+{u'account_id': u'gm_49121229', u'store_name': u'game', u'purchase_method': u'cash', u'branch_name': u'bellvile', u'products_purchased': [u'ps4 remote'], u'_id': ObjectId('5cad18d4a5f3826f6f046d77'), u'total_costs': 499.99}
+```
+
+### Find Many Documents:
+
+```
+>>> response = transactions.find({'purchase_method': 'cash'})
+>>> [doc for doc in response]
+[{u'account_id': u'bk_29151823', u'store_name': u'burger king', u'purchase_method': u'cash', u'branch_name': u'somerset west', u'products_purchased': [u'cheese burger', u'pepsi'], u'_id': ObjectId('5cad18d4a5f3826f6f046d76'), u'total_costs': 89.99}, {u'account_id': u'gm_49121229', u'store_name': u'game', u'purchase_method': u'cash', u'branch_name': u'bellvile', u'products_purchased': [u'ps4 remote'], u'_id': ObjectId('5cad18d4a5f3826f6f046d77'), u'total_costs': 499.99}]
+```
+
+Or filtering down the results to only the account id:
+
+```
+>>> response = transactions.find({'purchase_method': 'cash'})
+>>> [doc['account_id'] for doc in response]
+[u'bk_29151823', u'gm_49121229']
+```
