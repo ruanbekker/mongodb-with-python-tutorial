@@ -28,3 +28,21 @@ Making a connection with authentication:
 >>> client.database_names()
 [u'admin', u'local', u'mycargarage', u'random_api', u'shared_db', u'testdb']
 ```
+
+### Listing Databases
+
+
+```
+>>> client = MongoClient(uri)
+>>> client.database_names()
+[u'admin', u'local', u'mycargarage', u'random_api', u'shared_db', u'testdb']
+```
+
+### Listing Collections
+
+```
+>>> client = MongoClient(uri)
+>>> db = client.shared_db
+>>> db.collection_names()
+[u'flask_reminders', u'test', u'usersessions', u'messages']
+```
