@@ -215,3 +215,70 @@ Select fields to aggregate, eg. aggregate the costs for selected stores:
 >>> db.collection_names()
 []
 ```
+
+### MongoEngine - ORM
+
+```
+>>> from mongoengine import *
+>>> connect('project1', host="mongodb://user:pass@mongodb.domain.com:27017/random_api?authSource=admin&authMechanism=SCRAM-SHA-1")
+MongoClient(host=['mongodb.domain.com:27017'], document_class=dict, tz_aware=False, connect=True, read_preference=Primary(), authsource='admin', authmechanism='SCRAM-SHA-1')
+```
+
+```
+>>> class Student(Document):
+    name = StringField(required=True, max_length=200)
+    city = StringField(required=True, max_length=200)
+    can_code = BooleanField(required=True)
+
+```
+
+Create a student:
+
+```
+>>> doc_1 = Student(name='Josh', city='Cape Town', can_code=True)
+>>> doc_1.save()
+<Student: Student object>
+>>> doc_1.id
+ObjectId('5cad27dea5f38276a40f43db')
+>>> doc_1.name
+u'Josh'
+>>> doc_1.city
+u'Cape Town'
+>>> doc_1.can_code
+True
+```
+
+Test out validation:
+
+```
+>>> doc_2 = Student(name='Max', city='Cape Town')
+>>> doc_2.save()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python2.7/site-packages/mongoengine/document.py", line 369, in save
+    self.validate(clean=clean)
+  File "/usr/local/lib/python2.7/site-packages/mongoengine/base/document.py", line 392, in validate
+    raise ValidationError(message, errors=errors)
+mongoengine.errors.ValidationError: ValidationError (Student:None) (Field is required: ['can_code'])
+```
+
+Update a user's city:
+
+```
+>>> doc_2 = Student(name='Max', city='Cape Town', can_code=False)
+>>> doc_2.save()
+<Student: Student object>
+>>> doc_2.id
+ObjectId('5cad2835a5f38276a40f43dc')
+>>> doc_2.city
+u'Cape Town'
+>>> doc_2.city = 'Johannesburg'
+>>> doc_2.save()
+<Student: Student object>
+>>> doc_2.city
+'Johannesburg'
+```
+
+## Resources
+
+- https://realpython.com/introduction-to-mongodb-and-python/
