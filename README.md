@@ -124,3 +124,10 @@ Or filtering down the results to only the account id:
 >>> [doc['account_id'] for doc in response]
 [u'bk_29151823', u'gm_49121229']
 ```
+
+MongoDB also has a count method:
+
+```
+>>> transactions.find({'purchase_method': 'cash'}).count()
+2
+```
