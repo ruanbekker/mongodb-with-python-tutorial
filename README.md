@@ -279,6 +279,11 @@ u'Cape Town'
 'Johannesburg'
 ```
 
+## Datasets:
+- https://raw.githubusercontent.com/steveren/docs-assets/charts-tutorial/movieDetails.json
+
+
 ## Resources
 
 - https://realpython.com/introduction-to-mongodb-and-python/
+- https://docs.mongodb.com/charts/master/tutorial/movie-details/prereqs-and-import-data/
