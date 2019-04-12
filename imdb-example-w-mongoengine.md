@@ -20,25 +20,6 @@ client = MongoClient()
 import mongoengine
 mongoengine.connect('test', host='mongodb://localhost:27017/test')
 
-class Movie(mongoengine.Document):
-    meta = {'collection': 'movieDetails'}
-    title = mongoengine.StringField()
-    year = mongoengine.IntField()
-    rated = mongoengine.StringField()
-    runtime = mongoengine.IntField()
-    countries = mongoengine.ListField()
-    genres = mongoengine.ListField()
-    director = mongoengine.StringField()
-    writers = mongoengine.ListField()
-    actors = mongoengine.ListField()
-    plot = mongoengine.StringField()
-    poster = mongoengine.StringField()
-    imdb = mongoengine.EmbeddedDocumentField(Imdb)
-    tomato = mongoengine.EmbeddedDocumentField(Tomato)
-    metacritic = mongoengine.IntField()
-    awards = mongoengine.EmbeddedDocumentField(Awards)
-    type = mongoengine.StringField()
-
 class Imdb(mongoengine.EmbeddedDocument):
     meta = {'collection': 'movieDetails'}
     id = mongoengine.StringField()
@@ -64,6 +45,25 @@ class Awards(mongoengine.EmbeddedDocument):
     wins = mongoengine.IntField()
     nominations = mongoengine.IntField()
     text = mongoengine.StringField()
+    
+class Movie(mongoengine.Document):
+    meta = {'collection': 'movieDetails'}
+    title = mongoengine.StringField()
+    year = mongoengine.IntField()
+    rated = mongoengine.StringField()
+    runtime = mongoengine.IntField()
+    countries = mongoengine.ListField()
+    genres = mongoengine.ListField()
+    director = mongoengine.StringField()
+    writers = mongoengine.ListField()
+    actors = mongoengine.ListField()
+    plot = mongoengine.StringField()
+    poster = mongoengine.StringField()
+    imdb = mongoengine.EmbeddedDocumentField(Imdb)
+    tomato = mongoengine.EmbeddedDocumentField(Tomato)
+    metacritic = mongoengine.IntField()
+    awards = mongoengine.EmbeddedDocumentField(Awards)
+    type = mongoengine.StringField()
 ```
 ```
 >>> Movie.objects.first()
