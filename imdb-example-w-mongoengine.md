@@ -1,19 +1,20 @@
 ```
-docker run -d -p 27017:27017 --rm --name mongo mongo:3.6.5-jessie
-docker exec -it mongo sh
-apt update && apt install wget python python-setuptools && easy_install pip -y
+docker run -itd ruanbekker/mongodb:python
+docker exec -it f5b357cd3822 sh
+```
+
+```
 wget https://raw.githubusercontent.com/steveren/docs-assets/charts-tutorial/movieDetails.json
-pip install pymongo mongoengine
 mongoimport --db test --collection movieDetails --drop --file movieDetails.json
 ```
 
 ```
 from pymongo import MongoClient
 client = MongoClient()
->>> db = client['test']
->>> collection = db['movieDetails']
->>> collection.find_one()
-{u'tomato': {u'rating': 9.0, u'userReviews':
+db = client['test']
+collection = db['movieDetails']
+collection.find_one()
+# {u'tomato': {u'rating': 9.0, u'userReviews':
 ```
 
 ```
@@ -26,7 +27,6 @@ class Imdb(mongoengine.EmbeddedDocument):
     rating = mongoengine.DecimalField()
     votes = mongoengine.IntField()
 
-
 class Tomato(mongoengine.EmbeddedDocument):
     meta = {'collection': 'movieDetails'}
     meter = mongoengine.IntField()
@@ -38,7 +38,6 @@ class Tomato(mongoengine.EmbeddedDocument):
     userMeter = mongoengine.IntField()
     userRating = mongoengine.DecimalField()
     userReviews = mongoengine.IntField()
-
 
 class Awards(mongoengine.EmbeddedDocument):
     meta = {'collection': 'movieDetails'}
@@ -66,37 +65,45 @@ class Movie(mongoengine.Document):
     type = mongoengine.StringField()
 ```
 ```
->>> Movie.objects.first()
-<Movie: Movie object>
+Movie.objects.first()
+# <Movie: Movie object>
 
->>> movie = Movie.objects.first()
->>> movie.actors
-[u'Claudia Cardinale', u'Henry Fonda', u'Jason Robards', u'Charles Bronson']
->>> movie.to_json()
-'{"_id": {"$oid": "5b107bec1d2952d0da9046e0"}, "title": "Once Upon a Time
+movie = Movie.objects.first()
+movie.actors
+# [u'Claudia Cardinale', u'Henry Fonda', u'Jason Robards', u'Charles Bronson']
 
->>> Movie.objects(year__lte=1988)
-[<Movie: Movie object>, <Movie:
+movie.to_json()
+# '{"_id": {"$oid": "5b107bec1d2952d0da9046e0"}, "title": "Once Upon a Time
 
->>> Movie.objects(year__lte=1988)[0]
-<Movie: Movie object>
->>> Movie.objects(year__lte=1988)[0].actors
-[u'Claudia Cardinale', u'Henry Fonda', u'Jason Robards', u'Charles Bronson']
->>> Movie.objects(imdb__rating__gte=9)
-[<Movie: Movie object>, <Movie: Movie object>,
->>> Movie.objects(imdb__rating__gte=9)[0]
-<Movie: Movie object>
->>> Movie.objects(imdb__rating__gte=9)[0].title
-u'Gamechangers Ep. 3: A Legend in the Booth'
->>> Movie.objects(title__contains='Love')
-[<Movie: Movie object>, <Movie: Movie object>,
->>> [a.title for a in Movie.objects(title__contains='Love')]
-[u'Dr. Strangelove or: How I Learne
->>> [a.actors for a in Movie.objects(title__contains='Love') if a.title == 'Shakespeare in Love']
-[[u'Geoffrey Rush', u'Tom Wilkinson',
+Movie.objects(year__lte=1988)
+# [<Movie: Movie object>, <Movie:
 
->>> Movie.objects.count()
->>> Movie.objects(actors__size=2)
+Movie.objects(year__lte=1988)[0]
+# <Movie: Movie object>
+
+Movie.objects(year__lte=1988)[0].actors
+# [u'Claudia Cardinale', u'Henry Fonda', u'Jason Robards', u'Charles Bronson']
+
+Movie.objects(imdb__rating__gte=9)
+# [<Movie: Movie object>, <Movie: Movie object>,
+
+Movie.objects(imdb__rating__gte=9)[0]
+# <Movie: Movie object>
+
+Movie.objects(imdb__rating__gte=9)[0].title
+# u'Gamechangers Ep. 3: A Legend in the Booth'
+
+Movie.objects(title__contains='Love')
+# [<Movie: Movie object>, <Movie: Movie object>,
+
+[a.title for a in Movie.objects(title__contains='Love')]
+# [u'Dr. Strangelove or: How I Learne
+
+[a.actors for a in Movie.objects(title__contains='Love') if a.title == 'Shakespeare in Love']
+# [[u'Geoffrey Rush', u'Tom Wilkinson',
+
+Movie.objects.count()
+Movie.objects(actors__size=2)
 ```
 
 - https://docs.mongodb.com/charts/master/tutorial/movie-details/prereqs-and-import-data/
