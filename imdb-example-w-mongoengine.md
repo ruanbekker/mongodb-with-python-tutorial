@@ -68,6 +68,8 @@ class Movie(mongoengine.Document):
 ```
 >>> Movie.objects.first()
 <Movie: Movie object>
+
+>>> movie = Movie.objects.first()
 >>> movie.actors
 [u'Claudia Cardinale', u'Henry Fonda', u'Jason Robards', u'Charles Bronson']
 >>> movie.to_json()
