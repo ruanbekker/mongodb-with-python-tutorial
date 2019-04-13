@@ -166,6 +166,36 @@ gte - Greater Than Equals
 ne  - Not Equals
 ```
 
+## Updates
+
+Let's say we want to change a transactions payment method from credit card to account:
+
+```
+>>> transactions.find_one({'account_id':'sns_03821023'})
+{u'account_id': u'sns_03821023', u'store_name': u'sportsmans', u'purchase_method': u'credit card', u'branch_name': u'tygervalley', u'products_purchased': [u'cricket bat', u'cricket ball', u'sports hat'], u'_id': ObjectId('5cb18881df585e003c976d5d'), u'total_costs': 109.2}```
+```
+
+Update the purchase_method to account:
+
+```
+>>> transactions.update( {'account_id': 'sns_03821023'}, {'$set': {'purchase_method': 'account'}})
+{'updatedExisting': True, u'nModified': 1, u'ok': 1.0, u'n': 1}
+```
+
+Verify:
+
+```
+>>> transactions.find_one({'account_id':'sns_03821023'})
+{u'account_id': u'sns_03821023', u'store_name': u'sportsmans', u'purchase_method': u'account', u'branch_name': u'tygervalley', u'products_purchased': [u'cricket bat', u'cricket ball', u'sports hat'], u'_id': ObjectId('5cb18881df585e003c976d5d'), u'total_costs': 109.2}
+```
+
+This examples is only intended for a single document and mongodb only updates one document at a time. To update more than one at a time:
+
+```
+transactions.update( {'k': 'v'}, {'$set': {'k': 'new_v'}},{multi:true})
+```
+
+
 ### Filters
 
 Find all the documents with purchase price > 120:
