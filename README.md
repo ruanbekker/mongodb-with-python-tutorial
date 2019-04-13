@@ -259,6 +259,10 @@ Select fields to aggregate, eg. aggregate the costs for selected stores:
 >>> [a['account_id'] for a in response]
 [u'sns_03821023', u'sns_09121024', u'bk_29151823', u'gm_49121229']
 
+>>> response = transactions.find().limit(2)
+>>> [a['account_id'] for a in response]
+[u'sns_03821023', u'sns_09121024']
+
 >>> response = transactions.find().skip(1).limit(3)
 >>> [a['account_id'] for a in response]
 [u'sns_09121024', u'bk_29151823', u'gm_49121229']
@@ -270,6 +274,31 @@ Select fields to aggregate, eg. aggregate the costs for selected stores:
 >>> response = transactions.find().skip(3).limit(1)
 >>> [a['account_id'] for a in response]
 [u'gm_49121229']
+```
+
+## Indexes
+
+Create index:
+
+```
+>>> from pymongo import TEXT
+>>> transactions.create_index([("store_name", TEXT)], name='store_index', default_language='english')
+'store_index'
+```
+
+## Delete Documents:
+
+Delete selected documents:
+
+```
+>>> transactions.remove({'account_id':'sns_03821029'})
+{u'ok': 1.0, u'n': 2}
+```
+
+Delete all documents:
+
+```
+>>> transactions.remove()
 ```
 
 ### Drop Collections
@@ -349,5 +378,7 @@ u'Cape Town'
 
 ## Resources
 
+- https://itnext.io/indexing-and-mongodb-query-performance-a8a6a64c4308
 - https://realpython.com/introduction-to-mongodb-and-python/
 - https://docs.mongodb.com/charts/master/tutorial/movie-details/prereqs-and-import-data/
+- https://www.tutorialspoint.com/mongodb/mongodb_relationships.htm
