@@ -382,3 +382,4 @@ u'Cape Town'
 - https://realpython.com/introduction-to-mongodb-and-python/
 - https://docs.mongodb.com/charts/master/tutorial/movie-details/prereqs-and-import-data/
 - https://www.tutorialspoint.com/mongodb/mongodb_relationships.htm
+- http://zetcode.com/python/pymongo/
