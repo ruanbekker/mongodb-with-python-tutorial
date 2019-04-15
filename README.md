@@ -166,6 +166,27 @@ gte - Greater Than Equals
 ne  - Not Equals
 ```
 
+## Range Queries:
+
+```
+>>> import datetime
+>>> new_posts = [{"author": "Mike","text": "Another post!","tags": ["bulk", "insert"],"date": datetime.datetime(2009, 11, 12, 11, 14)},{"author": "Eliot","title": "MongoDB is fun","text": "and pretty easy too!","date": datetime.datetime(2009, 11, 10, 10, 45)}]
+>>> db.posts.insert(new_posts)
+[ObjectId('5cb439c0f90e2e002a164d15'), ObjectId('5cb439c0f90e2e002a164d16')]
+
+>>> for post in db.posts.find():
+...     post
+...
+{u'date': datetime.datetime(2009, 11, 12, 11, 14), u'text': u'Another post!', u'_id': ObjectId('5cb439c0f90e2e002a164d15'), u'author': u'Mike', u'tags': [u'bulk', u'insert']}
+{u'date': datetime.datetime(2009, 11, 10, 10, 45), u'text': u'and pretty easy too!', u'_id': ObjectId('5cb439c0f90e2e002a164d16'), u'author': u'Eliot', u'title': u'MongoDB is fun'}
+
+>>> d = datetime.datetime(2009, 11, 11, 12)
+>>> for post in db.posts.find({"date": {"$lt": d}}).sort("author"):
+...     post
+...
+{u'date': datetime.datetime(2009, 11, 10, 10, 45), u'text': u'and pretty easy too!', u'_id': ObjectId('5cb439c0f90e2e002a164d16'), u'author': u'Eliot', u'title': u'MongoDB is fun'}
+```
+
 ## Updates
 
 Let's say we want to change a transactions payment method from credit card to account:
