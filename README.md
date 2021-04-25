@@ -1,7 +1,17 @@
 # mongodb-with-python-tutorial
 MongoDB with Pymongo Tutorial
 
-### Installing
+### MongoDB Server
+
+Run a mongodb server with docker:
+
+```
+$ docker run --rm -itd --name mongodb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 mongo:4.4
+```
+
+### Python Package
+
+Install the python package to interact with mongodb using python:
 
 ```
 $ pip install pymongo
@@ -13,38 +23,36 @@ Making a connection without authentication:
 
 ```
 >>> from pymongo import MongoClient
->>> uri = 'mongodb://mongodb.domain.com:27017/'
+>>> uri = 'mongodb://localhost:27017/'
 >>> client = MongoClient(uri)
 >>> client.database_names()
-[u'admin', u'local', u'mycargarage', u'random_api', u'shared_db', u'testdb']
+['admin', 'config', 'local']
 ```
 
 Making a connection with authentication:
 
 ```
 >>> from pymongo import MongoClient
->>> uri = 'mongodb://username:password@mongodb.domain.com:27017/random_api?authSource=admin&authMechanism=SCRAM-SHA-1'
+>>> uri = 'mongodb://root:password@localhost:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-1'
 >>> client = MongoClient(uri)
 >>> client.database_names()
-[u'admin', u'local', u'mycargarage', u'random_api', u'shared_db', u'testdb']
+['admin', 'config', 'local']
 ```
 
 ### Listing Databases
 
 
 ```
->>> client = MongoClient(uri)
 >>> client.database_names()
-[u'admin', u'local', u'mycargarage', u'random_api', u'shared_db', u'testdb']
+['admin', 'config', 'local']
 ```
 
 ### Listing Collections
 
 ```
->>> client = MongoClient(uri)
->>> db = client.shared_db
->>> db.collection_names()
-[u'flask_reminders', u'test', u'usersessions', u'messages']
+>>> db = client.config
+>>> db.list_collection_names()
+['system.sessions']
 ```
 
 ### Write One Document 
@@ -71,8 +79,8 @@ ObjectId('5cad16a5a5f3826f6f046d74')
 We can verify that the collection is present:
 
 ```
->>> db.collection_names()
-[u'transactions']
+>>> db.list_collection_names()
+['transactions']
 ```
 
 ### Write Many Documents
@@ -343,7 +351,6 @@ MongoClient(host=['mongodb.domain.com:27017'], document_class=dict, tz_aware=Fal
     name = StringField(required=True, max_length=200)
     city = StringField(required=True, max_length=200)
     can_code = BooleanField(required=True)
-
 ```
 
 Create a student:
