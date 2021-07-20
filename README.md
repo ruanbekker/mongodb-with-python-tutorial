@@ -136,7 +136,7 @@ Or filtering down the results to only the account id:
 MongoDB also has a count method:
 
 ```
->>> transactions.find({'purchase_method': 'cash'}).count()
+>>> transactions.count_documents({'purchase_method': 'cash'})
 2
 ```
 
