@@ -25,7 +25,7 @@ Making a connection without authentication:
 >>> from pymongo import MongoClient
 >>> uri = 'mongodb://localhost:27017/'
 >>> client = MongoClient(uri)
->>> client.database_names()
+>>> client.list_database_names()
 ['admin', 'config', 'local']
 ```
 
