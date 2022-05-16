@@ -338,6 +338,12 @@ Delete all documents:
 []
 ```
 
+### Drop Databases
+
+```
+>>> c.drop_database('store_db')
+```
+
 ### MongoEngine - ORM
 
 ```
