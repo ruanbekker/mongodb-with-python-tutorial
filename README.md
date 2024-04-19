@@ -35,7 +35,7 @@ Making a connection with authentication:
 >>> from pymongo import MongoClient
 >>> uri = 'mongodb://root:password@localhost:27017/admin?authSource=admin&authMechanism=SCRAM-SHA-1'
 >>> client = MongoClient(uri)
->>> client.database_names()
+>>> client.list_database_names()
 ['admin', 'config', 'local']
 ```
 
@@ -43,7 +43,7 @@ Making a connection with authentication:
 
 
 ```
->>> client.database_names()
+>>> client.list_database_names()
 ['admin', 'config', 'local']
 ```
 
